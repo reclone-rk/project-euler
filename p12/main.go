@@ -36,6 +36,22 @@ func divCount(n int) int {
 	return total
 }
 
+// Method -2
+func numberOfDivisors(n int) int {
+	divs := 1
+	i := 1
+	for i*i < n {
+		if n%i == 0 {
+			divs += 2
+		}
+		i++
+	}
+	if i*i == n {
+		divs++
+	}
+	return divs
+}
+
 func solver(n int) int {
 	arr := []int{}
 	nth := 0
@@ -44,18 +60,7 @@ func solver(n int) int {
 		nth++
 		sum += nth
 
-		divs := 0
-		i := 1
-
-		for i*i < sum {
-			if sum%i == 0 {
-				divs += 2
-			}
-			i++
-		}
-		if i*i == sum {
-			divs++
-		}
+		divs := numberOfDivisors(sum)
 
 		for len(arr) <= divs {
 			arr = append(arr, sum)
@@ -67,4 +72,5 @@ func solver(n int) int {
 func main() {
 	// What is the value of the first triangle number to have over five hundred divisors? (500)
 	fmt.Println(solver(500))
+	// fmt.Println(numberOfDivisors(28))
 }
