@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// Number of divisors
 func divCount(n int) int {
 	var hash = make([]bool, n+1)
 	for i := 0; i <= n; i++ {
@@ -35,27 +36,35 @@ func divCount(n int) int {
 	return total
 }
 
-func nod(n int) int {
-	var cnt int
-	var i int
-	for i = 1; i <= n; i++ {
-		if n%i == 0 {
-			cnt++
+func solver(n int) int {
+	arr := []int{}
+	nth := 0
+	sum := 0
+	for len(arr) < 1000 {
+		nth++
+		sum += nth
+
+		divs := 0
+		i := 1
+
+		for i*i < sum {
+			if sum%i == 0 {
+				divs += 2
+			}
+			i++
+		}
+		if i*i == sum {
+			divs++
+		}
+
+		for len(arr) <= divs {
+			arr = append(arr, sum)
 		}
 	}
-	return cnt
+	return arr[n]
 }
 
 func main() {
 	// What is the value of the first triangle number to have over five hundred divisors? (500)
-	var nth int
-	var sum int
-	for {
-		nth++
-		sum += nth
-		if divCount(sum) > 5 {
-			fmt.Println(sum)
-			break
-		}
-	}
+	fmt.Println(solver(500))
 }
